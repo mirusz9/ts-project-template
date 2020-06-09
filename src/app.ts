@@ -1,9 +1,9 @@
 import express, { Request, Response, NextFunction} from "express";
+import path from "path";
+
 const app = express();
 const port = process.env.PORT || 3000;
-const splitRootDir = __dirname.split("\\");
-splitRootDir.pop();
-const rootDir = splitRootDir.join("\\");
+const rootDir = path.join(__dirname, "..");
 
 app.use(express.static(rootDir));
 

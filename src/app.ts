@@ -1,21 +1,24 @@
-const express = require("express");
+import express, { Request, Response, NextFunction} from "express";
 const app = express();
 const port = process.env.PORT || 3000;
+const splitRootDir = __dirname.split("\\");
+splitRootDir.pop();
+const rootDir = splitRootDir.join("\\");
 
-app.use(express.static(__dirname));
+app.use(express.static(rootDir));
 
+app.get("/", (req: Request, res: Response) => {
 
-app.get("/", (req, res) => {
-	res.sendFile("index.html");
+	res.sendFile(`${rootDir}\\index.html`);
+	res.end();
 });
 
-app.use((req, res, next) => {
+app.use((req: Request, res: Response, next: NextFunction) => {
 	res.redirect("/");
 	res.end();
 	next();
 })
 
-app.listen(port, (err) => {
-	if (err) throw err;
+app.listen(port, () => {
 	console.log(`Listening on localhost:${port}`);
 });
